@@ -1,5 +1,5 @@
 // pages/index.js
-import RealtimeText from '/components/RealtimeText';
+import RealtimeText from '../components/RealtimeText';
 
 export default function Home() {
   return (
@@ -8,5 +8,3 @@ export default function Home() {
     </div>
   );
 }
-
-//npm run dev to run it after filling out
