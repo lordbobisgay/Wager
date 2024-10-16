@@ -70,7 +70,7 @@ const RealtimeText = () => {
   const [text, setText] = useState('');
 
   useEffect(() => {
-    const textRef = database.ref('path/to/your/string');
+    const textRef = database.ref('comments/vercel/string');
 
     textRef.on('value', (snapshot) => {
       setText(snapshot.val());
