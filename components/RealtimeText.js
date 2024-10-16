@@ -9,6 +9,7 @@ const RealtimeText = () => {
     const textRef = database.ref('comments/vercel/string');
 
     textRef.on('value', (snapshot) => {
+	console.log(snapshot.val());
       setText(snapshot.val());
     });
 
