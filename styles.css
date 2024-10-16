@@ -81,3 +81,68 @@ body {
 	}
   }
   
+  /* Styles for the select dropdown */
+#payment-form select {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 20px;
+	border: 1px solid #ccd0d2;
+	border-radius: 4px;
+	font-size: 16px;
+	background-color: #ffffff;
+	box-sizing: border-box;
+	appearance: none;
+	background-image: url('data:image/svg+xml;charset=UTF8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10"><path fill="%236b7c93" d="M1 1l6 6 6-6"/></svg>');
+	background-repeat: no-repeat;
+	background-position: right 12px center;
+	background-size: 12px 8px;
+  }
+  
+  /* Styles for the additional details sections */
+  #bank-details,
+  #paypal-details {
+	padding: 20px;
+	margin-bottom: 20px;
+	background-color: #f6f9fc;
+	border: 1px solid #ccd0d2;
+	border-radius: 4px;
+  }
+  
+  #bank-details h3,
+  #paypal-details h3 {
+	margin-top: 0;
+	margin-bottom: 20px;
+	font-size: 20px;
+	color: #32325d;
+  }
+  
+  #bank-details label,
+  #paypal-details label {
+	margin-top: 10px;
+  }
+  
+  #bank-details input[type="text"],
+  #paypal-details input[type="email"] {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 20px;
+	border: 1px solid #ccd0d2;
+	border-radius: 4px;
+	font-size: 16px;
+	box-sizing: border-box;
+  }
+  
+  /* Error message styling */
+  #form-errors {
+	color: red;
+	margin-bottom: 20px;
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 600px) {
+	#bank-details,
+	#paypal-details {
+	  padding: 15px;
+	}
+  }
+  

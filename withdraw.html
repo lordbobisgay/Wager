@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Withdraw Funds</title>
+  <!-- Link to your existing styles.css -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Withdrawal Form -->
+<form id="payment-form">
+  <h2>Withdraw Funds</h2>
+  
+  <!-- Username -->
+  <label for="username">Username</label>
+  <input type="text" id="username" name="username" placeholder="Enter your username" required>
+
+  <!-- Amount -->
+  <label for="amount">Amount to Withdraw (USD)</label>
+  <input type="number" id="amount" name="amount" placeholder="Amount in USD" min="1" required>
+
+  <!-- Payment Method -->
+  <label for="payment-method">Select Withdrawal Method</label>
+  <select id="payment-method" name="payment-method" required>
+    <option value="">--Select--</option>
+    <option value="bank_transfer">Bank Transfer</option>
+    <option value="paypal">PayPal</option>
+  </select>
+
+  <!-- Bank Details -->
+  <div id="bank-details" style="display: none;">
+    <h3>Bank Details</h3>
+    <label for="account-holder-name">Account Holder Name</label>
+    <input type="text" id="account-holder-name" placeholder="Account Holder Name">
+
+    <label for="bank-name">Bank Name</label>
+    <input type="text" id="bank-name" placeholder="Bank Name">
+
+    <label for="account-number">Account Number</label>
+    <input type="text" id="account-number" placeholder="Account Number">
+
+    <label for="routing-number">Routing Number</label>
+    <input type="text" id="routing-number" placeholder="Routing Number">
+
+    <label for="bank-country">Bank Country</label>
+    <input type="text" id="bank-country" placeholder="Country">
+  </div>
+
+  <!-- PayPal Details -->
+  <div id="paypal-details" style="display: none;">
+    <h3>PayPal Details</h3>
+    <label for="paypal-email">PayPal Email</label>
+    <input type="email" id="paypal-email" placeholder="PayPal Email">
+  </div>
+
+  <!-- Error message placeholder -->
+  <div id="form-errors" role="alert"></div>
+
+  <!-- Submit Button -->
+  <button type="submit" id="submit-button">Request Withdrawal</button>
+</form>
+
+<h1>SUPSUPMERRRKY</h1>
+
+<script>
+  // Handle the display of payment method details
+  const paymentMethodSelect = document.getElementById('payment-method');
+  const bankDetails = document.getElementById('bank-details');
+  const paypalDetails = document.getElementById('paypal-details');
+
+  paymentMethodSelect.addEventListener('change', function() {
+    if (this.value === 'bank_transfer') {
+      bankDetails.style.display = 'block';
+      paypalDetails.style.display = 'none';
+      // Make bank details required
+      document.getElementById('account-holder-name').required = true;
+      document.getElementById('bank-name').required = true;
+      document.getElementById('account-number').required = true;
+      document.getElementById('routing-number').required = true;
+      document.getElementById('bank-country').required = true;
+      // Remove required from PayPal email
+      document.getElementById('paypal-email').required = false;
+    } else if (this.value === 'paypal') {
+      bankDetails.style.display = 'none';
+      paypalDetails.style.display = 'block';
+      // Make PayPal email required
+      document.getElementById('paypal-email').required = true;
+      // Remove required from bank details
+      document.getElementById('account-holder-name').required = false;
+      document.getElementById('bank-name').required = false;
+      document.getElementById('account-number').required = false;
+      document.getElementById('routing-number').required = false;
+      document.getElementById('bank-country').required = false;
+    } else {
+      bankDetails.style.display = 'none';
+      paypalDetails.style.display = 'none';
+      // Remove required from all payment details
+      document.getElementById('paypal-email').required = false;
+      document.getElementById('account-holder-name').required = false;
+      document.getElementById('bank-name').required = false;
+      document.getElementById('account-number').required = false;
+      document.getElementById('routing-number').required = false;
+      document.getElementById('bank-country').required = false;
+    }
+  });
+
+  // Handle form submission
+  document.getElementById('payment-form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Disable the submit button to prevent multiple clicks
+    document.getElementById('submit-button').disabled = true;
+
+    // Collect input values
+    const username = document.getElementById('username').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    const paymentMethod = document.getElementById('payment-method').value;
+
+    let paymentDetails = {};
+
+    if (paymentMethod === 'bank_transfer') {
+      paymentDetails = {
+        accountHolderName: document.getElementById('account-holder-name').value,
+        bankName: document.getElementById('bank-name').value,
+        accountNumber: document.getElementById('account-number').value,
+        routingNumber: document.getElementById('routing-number').value,
+        bankCountry: document.getElementById('bank-country').value,
+      };
+    } else if (paymentMethod === 'paypal') {
+      paymentDetails = {
+        paypalEmail: document.getElementById('paypal-email').value,
+      };
+    }
+
+    // Prepare data to send to the server
+    const withdrawalRequest = {
+      username: username,
+      amount: amount,
+      paymentMethod: paymentMethod,
+      paymentDetails: paymentDetails,
+    };
+
+    try {
+      const response = await fetch('https://your-backend-api-endpoint.com/withdraw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(withdrawalRequest),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Withdrawal request successful
+        alert('Your withdrawal request has been submitted successfully.');
+        document.getElementById('payment-form').reset();
+        bankDetails.style.display = 'none';
+        paypalDetails.style.display = 'none';
+      } else {
+        // Handle server errors
+        console.error('Server Error:', result.error);
+        document.getElementById('form-errors').textContent = `Error: ${result.error}`;
+      }
+    } catch (err) {
+      console.error('Fetch Error:', err);
+      document.getElementById('form-errors').textContent = `Network Error: ${err.message}`;
+    } finally {
+      document.getElementById('submit-button').disabled = false;
+    }
+  });
+</script>
+
+</body>
+</html>
