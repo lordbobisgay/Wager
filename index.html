@@ -44,7 +44,7 @@
   <label for="zip">ZIP Code</label>
   <input type="text" id="zip" placeholder="ZIP Code" required>
 
-  <label for="country">Country</label>
+  <label for="country">Country Code, For Example: US</label>
   <input type="text" id="country" placeholder="Country" required>
 
   <!-- Card Element Placeholder -->
@@ -58,12 +58,11 @@
   <button type="submit" id="submit-button">Deposit Funds</button>
 </form>
 
-<h1 id="changingText">This text is tied to a string in my firebase realtime database</h1>
 
 <script>
 
   // Initialize Stripe with your publishable key
-  const stripe = Stripe('pk_live_51Q6fFZP3nHYBMiNOWHdAxXOS8ekHTWccVJoWUCM1si2culrYpr04xq9tGrCIK4kfeGwiILRT4OCAsMDGoXdpLzeg00n6ILjRHg'); // Replace with your Stripe publishable key
+  const stripe = Stripe('pk_test_51Q6fFZP3nHYBMiNO9VeL43Xslwvz9OtJuArL5NsuDiJPX86qEygYxUl0uBHmqE6APLAFupmY8i4opEkAjpS33US700Qx1PpQjt'); // Replace with your Stripe publishable key
 
   // Create an instance of Elements
   const elements = stripe.elements();
